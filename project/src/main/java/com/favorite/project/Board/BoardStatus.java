@@ -1,4 +1,4 @@
-package com.favorite.project.Board.domain;
+package com.favorite.project.Board;
 
 import lombok.Getter;
 

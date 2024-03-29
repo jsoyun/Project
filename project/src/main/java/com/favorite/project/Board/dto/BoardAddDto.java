@@ -1,8 +1,8 @@
 package com.favorite.project.Board.dto;
 
 import com.favorite.project.Board.domain.Board;
-import com.favorite.project.Board.domain.BoardStatus;
-import com.favorite.project.Board.domain.BoardType;
+import com.favorite.project.Board.BoardStatus;
+import com.favorite.project.Board.BoardType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

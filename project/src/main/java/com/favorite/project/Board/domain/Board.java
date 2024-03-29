@@ -1,5 +1,7 @@
 package com.favorite.project.Board.domain;
 
+import com.favorite.project.Board.BoardStatus;
+import com.favorite.project.Board.BoardType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

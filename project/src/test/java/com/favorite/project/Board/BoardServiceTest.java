@@ -1,6 +1,5 @@
 package com.favorite.project.Board;
 
-import com.favorite.project.Board.Mapper.BoardMapper;
 import com.favorite.project.Board.dto.BoardAddDto;
 import com.favorite.project.Clothes.Mapper.ClothesMapper;
 import org.junit.jupiter.api.Assertions;
@@ -31,7 +30,7 @@ public class BoardServiceTest {
         BoardAddDto boardAddDto = BoardAddDto.builder().clothesId(1).build();
         when(clothesMapper.checkClothesById(boardAddDto.getClothesId())).thenReturn(false);
 
-        Assertions.assertThrows(NoSuchElementException.class, () -> boardService.PostBoard(boardAddDto));
+        Assertions.assertThrows(NoSuchElementException.class, () -> boardService.postBoard(boardAddDto));
 
     }
 

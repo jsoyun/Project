@@ -20,14 +20,14 @@ import javax.servlet.http.HttpSession;
 @RequestMapping
 public class BoardController {
     private final BoardService boardService;
-    
+
     @PostMapping("/board")
     public ResponseEntity<BoardResponseDto> postBoard(@RequestBody BoardAddDto boardAddDto, HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession(false);
         User user = (User) session.getAttribute(SessionConst.USER_SESSION_ID);
         boardAddDto.setUserId(user.getId());
 
-        BoardResponseDto boardResponseDto = boardService.PostBoard(boardAddDto);
+        BoardResponseDto boardResponseDto = boardService.postBoard(boardAddDto);
         return new ResponseEntity<>(boardResponseDto, HttpStatus.OK);
 
 
