@@ -26,7 +26,7 @@ public class ReserveMapperTest {
     public void 예약요청건_생성_성공() {
 
         ReserveRequest reserveRequest = ReserveRequest.builder()
-                .requesterId(1)
+                .requesterId(1L)
                 .boardId(24)
                 .requestTime(LocalDateTime.now())
                 .requestStatus(PENDING)
@@ -42,5 +42,4 @@ public class ReserveMapperTest {
         Assertions.assertThat(reservationRequest).isEqualTo(1);
 
     }
-
 }
