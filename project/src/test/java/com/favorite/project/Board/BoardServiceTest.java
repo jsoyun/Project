@@ -24,7 +24,7 @@ public class BoardServiceTest {
 
 
     @Test
-    @DisplayName("잘못된_옷_정보를_게시판에_올려서_실패")
+    @DisplayName("존재하지않는_옷_정보를_게시판에_올려서_실패")
     public void postWrongClothesId() {
 
         BoardAddDto boardAddDto = BoardAddDto.builder().clothesId(1).build();
