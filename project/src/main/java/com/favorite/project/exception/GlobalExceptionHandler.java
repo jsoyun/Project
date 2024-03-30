@@ -93,5 +93,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(exceptionResponse, exceptionResponse.getStatus());
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ExceptionResponse> handleNullPointerException(RuntimeException exception) {
+        List<String> Messages = new ArrayList<>();
+        Messages.add(exception.getMessage());
+        ExceptionResponse exceptionResponse = ExceptionResponse.builder().message("RuntimeException 발생").exceptions(Messages).status(HttpStatus.BAD_REQUEST).build();
+        return new ResponseEntity<>(exceptionResponse, exceptionResponse.getStatus());
+    }
+
 
 }
