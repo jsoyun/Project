@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 public class ReserveRequest {
-    private int requesterId;
+    private Long requesterId;
     private int boardId;
     private LocalDateTime requestTime;
     private ReserveRequestStatus requestStatus;

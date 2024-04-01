@@ -2,8 +2,6 @@ package com.favorite.project.Board;
 
 import com.favorite.project.Board.Mapper.BoardMapper;
 import com.favorite.project.Board.domain.Board;
-import com.favorite.project.Board.domain.BoardStatus;
-import com.favorite.project.Board.domain.BoardType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
