@@ -9,7 +9,9 @@ import com.favorite.project.ReserveRequest.dto.ReserveApprovalUpdateDto;
 import com.favorite.project.ReserveRequest.dto.ReserveRequestAddDto;
 import com.favorite.project.User.domain.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import static com.favorite.project.ReserveRequest.ReserveRequestStatus.APPROVED;
@@ -38,7 +40,7 @@ public class ReserveService {
     }
 
 
-    //특정예약요청건을 승인! 판매자가 승인!
+    @Transactional
     public ReserveApprovalResponseDto approveReservationRequest(ReserveApprovalRequestDto reserveApprovalRequestDto, User user) {
         int boardId = reserveApprovalRequestDto.getBoardId();
         boardService.checkPoster(user.getId(), boardId);
@@ -52,7 +54,6 @@ public class ReserveService {
 
         ReserveApprovedDto reserveApprovedDtoById =
                 reserveMapper.findReserveApprovedDtoById(reserveApprovalRequestDto.getReserveRequestId());
-
 
         boardService.changeToReservedBoard(reserveApprovalRequestDto.getBoardId());
 

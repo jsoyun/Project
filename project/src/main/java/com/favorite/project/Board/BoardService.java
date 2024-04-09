@@ -6,6 +6,7 @@ import com.favorite.project.Board.dto.BoardAddDto;
 import com.favorite.project.Board.dto.BoardResponseDto;
 import com.favorite.project.Board.dto.BoardStatusToReservedDto;
 import com.favorite.project.Clothes.Mapper.ClothesMapper;
+import com.favorite.project.exception.ReservationNotAllowedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +49,7 @@ public class BoardService {
 
         boolean result = boardMapper.checkBoardStatusIsAvailable(boardId);
         if (!result) {
-            throw new RuntimeException("예약이 불가능합니다.");
+            throw new ReservationNotAllowedException("예약이 불가능합니다.");
 
         }
 
