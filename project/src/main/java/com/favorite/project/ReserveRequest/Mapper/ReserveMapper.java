@@ -16,7 +16,7 @@ public interface ReserveMapper {
     @Update("UPDATE ReserveRequest SET requestStatus = #{ReserveApprovalUpdateDto.requestStatus} where id = #{ReserveApprovalUpdateDto.id} ")
     int approveReservationRequest(@Param("ReserveApprovalUpdateDto") ReserveApprovalUpdateDto reserveApprovalUpdateDto);
 
-    @Select("SELECT requesterId, boardId, requestTime, requestStatus, amount FROM ReserveRequest WHERE id = #{id}")
+    @Select("SELECT requester_id, board_id, requestTime, requestStatus, amount FROM ReserveRequest WHERE id = #{id}")
     ReserveApprovedDto findReserveApprovedDtoById(int id);
 
 }
