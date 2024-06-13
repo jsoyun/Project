@@ -7,6 +7,7 @@
     <link href="../css/bootstrap.min.css"
           th:href="@{/css/bootstrap.min.css}"
           rel="stylesheet">
+    <link href="../css/loginForm.css" th:href="@{/css/loginForm.css}" rel="stylesheet">
 
 </head>
 <body>
@@ -23,6 +24,8 @@
         <p class="field-error" th:each="err : ${#fields.globalErrors()}" style="color: red;" th:text="${err}">전체 오류
             메시지</p>
     </div>
+
+    <div id="error-message" style="color: red;"></div>
 
     <button type="button" onclick="submitForm()">Submit</button>
 </form>
@@ -47,37 +50,40 @@
             })
         })
             .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error(`서버 응답 오류${response.status}`)
-                    }
+
+                if (!response.ok) {
+
+                    return response.json().then(errorData => {
+                        throw new Error(JSON.stringify(errorData));
+                    })
                 }
-            )
+                return response.json
+
+
+            })
             .then(data => {
-                console.log("data==", data)
-
-                // //html로 표시
-                // const displayElement = document.createElement('div');
-                // displayElement.innerHTML = `Name: ${data.name}`;
-                // document.body.appendChild(displayElement);
-
-                // 받은 데이터에 따라 처리
-                if (data) {
-
-                    console.log("데이터가 true입니다.");
-                    window.location.href = "http://localhost:8080/"
-                } else if (data === false) {
-                    console.log("데이터가 false입니다.");
-                } else {
-                    console.log("다른 형식의 데이터입니다.");
-                }
+                window.location = "http://localhost:8080/";
 
 
             })
             .catch(error => {
-                console.error('데이터 불러오기 실패:', error);
-            });
+                const errorData = JSON.parse(error.message)
+                console.error('데이터 불러오기 실패:', errorData);
+                console.log("예외 메시지" + errorData.message)
+                console.log("예외 예외" + errorData.exceptions);
+
+                const errorMessageElement
+                    = document.getElementById('error-message');
+                errorMessageElement.innerHTML = `
+                  <p>예외 메시지: ${errorData.message}</p>
+            <ul>
+                ${errorData.exceptions.map(exception => `<li>${exception}</li>`).join('')}
+            </ul>`
+
+            }).finally(result => {
+                console.log("fetch 작업 완료")
+            }
+        );
 
     }
 
