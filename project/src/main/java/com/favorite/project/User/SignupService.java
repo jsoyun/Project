@@ -23,11 +23,9 @@ public class SignupService {
     private final UserMapper userMapper;
 
 
-    public UserDTO signup(UserDTO userDTO) {
+    public void signup(UserDTO userDTO) {
         User user = User.builder().build().toUser(userDTO);
-        User newUser = userMapper.insert(user);
-        UserDTO createdUserDTO = UserDTO.builder().build().toUserDTO(newUser);
-        return createdUserDTO;
+        userMapper.insert(user);
 
 
     }

@@ -3,11 +3,13 @@ package com.favorite.project.User.domain;
 import com.favorite.project.User.dto.UserDTO;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
 @Getter
 @Builder
+@Setter
 public class User {
     //    private UUID uuid;
     private Long id;

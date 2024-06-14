@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -80,9 +81,9 @@ public class UserMapperTest {
     public void InsertUserTest() {
         //given
         User mocktest = User.builder().email("user1").password("1234").build();
-        when(userMapper.insert(mocktest)).thenReturn(mocktest);
+        when(userMapper.insert(mocktest)).thenReturn(1);
         //when
-        User insert = userMapper.insert(mocktest);
+        int insert = userMapper.insert(mocktest);
         //then
         verify(userMapper).insert(mocktest);
         Assertions.assertThat(insert);
@@ -93,15 +94,14 @@ public class UserMapperTest {
     public void GetByIdTest() {
         //given
         User mocktest = User.builder().email("user1").password("1234").build();
-        when(userMapper.getById(1L)).thenReturn(mocktest);
+        when(userMapper.findUserById(1L)).thenReturn(Optional.ofNullable(mocktest));
         //when
-        User UserbyId = userMapper.getById(1L);
+        Optional<User> UserbyId = userMapper.findUserById(1L);
         //then
-        verify(userMapper).getById(1L);
-        Assertions.assertThat(mocktest.getEmail().equals(UserbyId.getEmail()));
+        verify(userMapper).findUserById(1L);
+        Assertions.assertThat(mocktest.getEmail().equals(UserbyId.get().getEmail()));
         Assertions.assertThat(UserbyId);
 
-        log.info("user ={},{},{}", UserbyId.getEmail(), UserbyId.getPassword());
 
     }
 
