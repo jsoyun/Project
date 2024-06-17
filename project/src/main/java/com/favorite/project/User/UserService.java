@@ -22,10 +22,10 @@ public class UserService {
     private final UserMapper userMapper;
 
 
-    public Optional<User> getUserByEmail(User user) {
-
-        return Optional.ofNullable(userMapper.getByEmail(user.getEmail()));
-    }
+//    public Optional<User> getUserByEmail(User user) {
+//
+//        return Optional.ofNullable(userMapper.getByEmail(user.getEmail()));
+//    }
 
     public List<User> getAllUsers() {
         return userMapper.getAllUsers();
@@ -81,6 +81,14 @@ public class UserService {
         userMapper.updateUser(userId, existingUser);
         return existingUser;
 
+
+    }
+
+    public void deleteUserById(String userEmail) {
+        User byEmail = userMapper.getByEmail(userEmail).orElseThrow(() -> new NoSuchElementException("해당하는 이메일이 없습니다."));
+        //TODO: user_id(또는 requester_id) 외래키로 다른 테이블에서 참조되어 사용되는 id면 로우(행,레코드) 삭제 안됨
+        
+        userMapper.deleteUser(byEmail.getId());
 
     }
 }
