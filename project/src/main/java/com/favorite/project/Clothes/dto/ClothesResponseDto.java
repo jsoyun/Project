@@ -11,10 +11,10 @@ import java.time.LocalDate;
 @Getter
 public class ClothesResponseDto {
     private ClothesCategoryEnumType clothesCategoryType;
-    private SeasonType seasonType;
     private int price;
     private String imgUrl;
     private LocalDate purchasedDate;
+    private SeasonType seasonType;
     private int userId;
     private int categoryId;
     private int userClosetId;
