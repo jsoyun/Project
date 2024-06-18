@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>옷 검색 페이지</title>
+</head>
+<body>
+<h1>마음에 드는 옷을 찾아보자</h1>
+
+<label for="seasonType">Season:</label>
+<select id="seasonType">
+    <option value="">Select Season</option>
+    <option value="SPRING">Spring</option>
+    <option value="SUMMER">Summer</option>
+    <option value="FALL">Fall</option>
+    <option value="WINTER">Winter</option>
+</select>
+
+<br><br>
+
+<label for="clothesCategory">Clothes Category:</label>
+<select id="clothesCategory">
+    <option value="">Select Category</option>
+    <option value="TOPS">상의</option>
+    <option value="PANTS">하의</option>
+    <option value="OUTERWEAR">겉옷</option>
+    <option value="ACTIVE">활동복</option>
+</select>
+
+<br><br>
+
+<label for="minPrice">Min Price:</label>
+<input type="number" id="minPrice" name="minPrice">
+
+<br><br>
+
+<label for="maxPrice">Max Price:</label>
+<input type="number" id="maxPrice" name="maxPrice">
+
+<br><br>
+
+<button onclick="fetchClothes()">Search Clothes</button>
+
+<hr>
+
+<div id="clothesList">
+    <!-- Clothes list will be displayed here -->
+</div>
+
+<script>
+    function fetchClothes() {
+        const seasonType = document.getElementById('seasonType').value;
+        const clothesCategoryEnumType = document.getElementById('clothesCategory').value;
+        const minPrice = document.getElementById('minPrice').value;
+        const maxPrice = document.getElementById('maxPrice').value;
+
+        // Construct URL with query parameters
+        let url = '/clothes';
+        url += `?seasonType=${seasonType}`;
+        url += `&clothesCategoryEnumType=${clothesCategoryEnumType}`;
+        url += `&minPrice=${minPrice}`;
+        url += `&maxPrice=${maxPrice}`;
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle successful response
+                displayClothes(data);
+            })
+            .catch(error => {
+                console.error('Error fetching clothes:', error);
+            });
+    }
+
+    function displayClothes(clothesList) {
+        const clothesListContainer = document.getElementById('clothesList');
+        clothesListContainer.innerHTML = '';
+
+        if (clothesList.length === 0) {
+            clothesListContainer.innerHTML = '<p>No clothes found.</p>';
+            return;
+        }
+
+        const ul = document.createElement('ul');
+        clothesList.forEach(clothes => {
+            const li = document.createElement('li');
+            li.textContent = `userClosetID: ${clothes.userClosetId}, Category: ${clothes.clothesCategoryEnumTypeName}, Price: ${clothes.price} ,img: ${clothes.img} ,season: ${clothes.season}`;
+            ul.appendChild(li);
+        });
+        clothesListContainer.appendChild(ul);
+    }
+</script>
+</body>
+</html>

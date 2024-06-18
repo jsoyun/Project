@@ -3,6 +3,8 @@ package com.favorite.project.Clothes.Mapper;
 import com.favorite.project.Clothes.SeasonType;
 import com.favorite.project.Clothes.domain.Clothes;
 import com.favorite.project.Clothes.dto.ClothesListDto;
+import com.favorite.project.Clothes.dto.ClothesTotalList;
+import com.favorite.project.Clothes.provider.ClothesSqlProvider;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -24,8 +26,7 @@ public interface ClothesMapper {
     @Select("SELECT id,userCloset_id,clothes_category_id, price,img, purchased_date,season  FROM Clothes WHERE userCloset_id = #{UserClosetId}  LIMIT #{pageSize} OFFSET #{page} ")
     List<ClothesListDto> selectAllClothesByUserClosetId(@Param("UserClosetId") int userClosetId, @Param("page") int page, @Param("pageSize") int pageSize);
 
-
-    @Select("SELECT id,userCloset_id,clothes_category_id, price,img, purchased_date,season FROM Clothes WHERE season = #{seasonType} ")
-    List<ClothesListDto> selectClothesBySeason(@Param("seasonType") SeasonType seasonType);
+    @SelectProvider(type = ClothesSqlProvider.class, method = "selectClothes")
+    List<ClothesTotalList> selectClothes(@Param("seasonType") SeasonType seasonType, @Param("clothesType") Integer clothesTypeId, @Param("minPrice") Double minPrice, @Param("maxPrice") Double maxPrice);
 
 }

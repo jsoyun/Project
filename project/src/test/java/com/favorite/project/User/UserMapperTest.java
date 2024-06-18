@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-//import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class UserMapperTest {
 
     @BeforeEach
     public void setUser() {
-        MockitoAnnotations.openMocks(this); //?
+        MockitoAnnotations.openMocks(this);
 
     }
 
@@ -63,10 +62,10 @@ public class UserMapperTest {
     public void GetUserByEmailTest() {
         //given
         User mocktest = User.builder().email("Mocktest").password("1234").build();
-        when(userMapper.getByEmail("Mocktest")).thenReturn(mocktest);
+        when(userMapper.getByEmail("Mocktest")).thenReturn(Optional.ofNullable(mocktest));
 
         //when
-        User UserByEmail = userMapper.getByEmail("Mocktest");
+        User UserByEmail = userMapper.getByEmail("Mocktest").orElseThrow();
 
         //then
         verify(userMapper).getByEmail("Mocktest");

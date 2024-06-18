@@ -18,6 +18,6 @@ public class LoginUserService {
 
     public User getUserByEmail(User user) {
 
-        return Optional.ofNullable(userMapper.getByEmail(user.getEmail())).orElseThrow(() -> new NoSuchElementException("해당하는 이메일이 없습니다."));
+        return userMapper.getByEmail(user.getEmail()).orElseThrow(() -> new NoSuchElementException("해당하는 이메일이 없습니다."));
     }
 }

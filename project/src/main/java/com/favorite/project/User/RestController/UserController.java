@@ -52,5 +52,12 @@ public class UserController {
 
     }
 
+    @DeleteMapping("/{userEmail}")
+    public ResponseEntity<HttpStatus> deleteUserById(@PathVariable String userEmail) {
+        userService.deleteUserById(userEmail);
+        return ResponseEntity.ok(HttpStatus.OK);
+
+    }
+
 
 }

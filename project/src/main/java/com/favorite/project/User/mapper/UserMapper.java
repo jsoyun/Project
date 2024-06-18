@@ -16,7 +16,7 @@ public interface UserMapper {
     Optional<User> findUserById(Long userId);
 
     @Select("SELECT * FROM Users WHERE email = #{email}")
-    User getByEmail(@Param("email") String email);
+    Optional<User> getByEmail(@Param("email") String email);
 
     @Insert("INSERT INTO Users (email, name, password) VALUES(#{user.email} , #{user.name}, #{user.password})")
     int insert(@Param("user") User users);
@@ -24,6 +24,8 @@ public interface UserMapper {
     @Update("UPDATE Users SET email= #{user.email}, name= #{user.name}, password = #{user.password} where id = #{userId} ")
     void updateUser(Long userId, User user);
 
+    @Delete("DELETE FROM Users where id = #{userId} ")
+    void deleteUser(Long userId);
 
     //xml 사용하고 싶은데 안됨.
     List<User> select();

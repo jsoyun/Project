@@ -8,22 +8,20 @@
 </head>
 <body>
 <div id="response-container"></div>
-<button id="scrollToTopBtn" style="display: none">맨 위로</button>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
             const responseContainer = document.getElementById('response-container');
-            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-            let page = 1;
-            let isScrolling = false;
 
             function loadUsers() {
                 // API 요청
-                fetch(`/users?page=${page}`)
+                fetch(`/users`)
                     .then(response => response.json())
                     .then(users => {
-                        // JSON 데이터를 HTML에 표시
                         users.forEach(user => {
                             responseContainer.innerHTML += `
+                            <button onclick="deleteUser('${user.email}') ">삭제버튼입니다${user.email}</button>
+
                             <p>Name: ${user.name}</p>
                             <p>Email: ${user.email}</p>
                             <p>Password: ${user.password}</p>
@@ -31,7 +29,7 @@
                         `;
                         });
 
-                        page++;
+
                     })
                     .catch(error => {
                         console.error('API 요청 중 오류 발생:', error);
@@ -39,38 +37,24 @@
                     });
             }
 
-
-            window.addEventListener('scroll', () => {
-                isScrolling = true;
-
-
-                const {scrollTop, clientHeight, scrollHeight} = document.documentElement;
-                if (scrollTop + clientHeight >= scrollHeight - 5) {
-                    loadUsers();
-                }
-
-                clearTimeout(timeout);
-                timeout = setTimeout(() => {
-                    isScrolling = false;
-                    toggleScrollToTopBtn();
-                }, 100);
-
-
-            });
-
-            let timeout;
-            scrollToTopBtn.addEventListener('click', () => {
-                window.scrollTo({
-                    top     : 0,
-                    behavior: 'smooth'
-                });
-            });
-
-
             loadUsers();
 
         }
     );
+
+
+    function deleteUser(email) {
+        console.log("email" + email)
+        var url = `/users/${email}`
+
+        fetch(url, {
+            method: 'DELETE'
+
+        }).then(response => {
+            console.log("status", email + response.status)
+        })
+
+    }
 </script>
 </body>
 </html>

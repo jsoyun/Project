@@ -3,6 +3,7 @@ package com.favorite.project.Clothes;
 import com.favorite.project.Clothes.Mapper.ClothesMapper;
 import com.favorite.project.Clothes.domain.Clothes;
 import com.favorite.project.Clothes.dto.*;
+import com.favorite.project.ClothesCategory.ClothesCategoryEnumType;
 import com.favorite.project.UserCloset.UserClosetValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -56,17 +58,22 @@ public class ClothesService {
     }
 
 
-    public List<SeansonResponseDto> getClothesBySeason(SeasonType seasonType) {
-        List<ClothesListDto> clothesListDtos = clothesMapper.selectClothesBySeason(seasonType);
-        List<SeansonResponseDto> seansonResponseDtoList = new ArrayList<>();
-        for (ClothesListDto clothesListDto : clothesListDtos) {
-            SeansonResponseDto seansonResponseDto = SeansonResponseDto.builder()
-                    .build()
-                    .toSeansonResponseDto(clothesListDto);
-            seansonResponseDtoList.add(seansonResponseDto);
+    public List<ClothesTotalListResponse> getClothes(SeasonType seasonType, ClothesCategoryEnumType clothesCategoryEnumType, Double minPrice, Double maxPrice) {
+        Integer clothesCategoryId = (clothesCategoryEnumType != null) ? clothesCategoryEnumType.getClothesCategoryId() : null;
+        List<ClothesTotalList> clothesTotalLists = clothesMapper.selectClothes(seasonType, clothesCategoryId, minPrice, maxPrice);
+        return clothesTotalLists.stream().map(this::convertToResponseDto)
+                .collect(Collectors.toList());
+    }
 
-        }
-        return seansonResponseDtoList;
+    private ClothesTotalListResponse convertToResponseDto(ClothesTotalList clothesListDto) {
+        return ClothesTotalListResponse.builder()
+                .price(clothesListDto.getPrice())
+                .img(clothesListDto.getImg())
+                .userClosetId(clothesListDto.getUserClosetId())
+                .season(clothesListDto.getSeason())
+                .clothesCategoryEnumTypeName(ClothesCategoryEnumType.getClothesCategoryName(clothesListDto.getClothesCategoryEnumTypeId()))
+                .build();
+
 
     }
 

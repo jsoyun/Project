@@ -32,7 +32,7 @@ public class LoginUserDataServiceTest {
         String userEmail = "test@example.com";
         String password = "123";
         User user = User.builder().email(userEmail).password(password).build();
-        when(userMapper.getByEmail(userEmail)).thenReturn(user); //조회해서 값이 있다고 가정했을 때
+        when(userMapper.getByEmail(userEmail)).thenReturn(Optional.ofNullable(user)); //조회해서 값이 있다고 가정했을 때
 
         //when
         User result = loginUserService.getUserByEmail(user);
