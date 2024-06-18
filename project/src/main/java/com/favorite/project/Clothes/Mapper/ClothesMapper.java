@@ -27,6 +27,6 @@ public interface ClothesMapper {
     List<ClothesListDto> selectAllClothesByUserClosetId(@Param("UserClosetId") int userClosetId, @Param("page") int page, @Param("pageSize") int pageSize);
 
     @SelectProvider(type = ClothesSqlProvider.class, method = "selectClothes")
-    List<ClothesTotalList> selectClothes(@Param("seasonType") SeasonType seasonType, @Param("clothesType") int clothesTypeId, @Param("minPrice") Double minPrice, @Param("maxPrice") Double maxPrice);
+    List<ClothesTotalList> selectClothes(@Param("seasonType") SeasonType seasonType, @Param("clothesType") Integer clothesTypeId, @Param("minPrice") Double minPrice, @Param("maxPrice") Double maxPrice);
 
 }

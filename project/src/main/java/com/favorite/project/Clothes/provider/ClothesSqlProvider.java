@@ -9,15 +9,14 @@ import org.slf4j.LoggerFactory;
 public class ClothesSqlProvider {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public String selectClothes(SeasonType seasonType, int clothesType, Double minPrice, Double maxPrice) {
-        logger.info("selectClothes 쿼리 실행됨====" + clothesType);
+    public String selectClothes(SeasonType seasonType, Integer clothesType, Double minPrice, Double maxPrice) {
         return new SQL() {{
             SELECT(" userCloset_id,clothes_category_id, price, img,season");
             FROM("Clothes");
             if (seasonType != null) {
                 WHERE("season = #{seasonType}");
             }
-            if (clothesType != 0) {
+            if (clothesType != null) {
                 WHERE("clothes_category_id = #{clothesType}");
             }
             if (minPrice != null && maxPrice != null) {

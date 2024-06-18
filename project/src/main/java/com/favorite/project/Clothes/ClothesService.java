@@ -59,7 +59,7 @@ public class ClothesService {
 
 
     public List<ClothesTotalListResponse> getClothes(SeasonType seasonType, ClothesCategoryEnumType clothesCategoryEnumType, Double minPrice, Double maxPrice) {
-        int clothesCategoryId = clothesCategoryEnumType.getClothesCategoryId();
+        Integer clothesCategoryId = (clothesCategoryEnumType != null) ? clothesCategoryEnumType.getClothesCategoryId() : null;
         List<ClothesTotalList> clothesTotalLists = clothesMapper.selectClothes(seasonType, clothesCategoryId, minPrice, maxPrice);
         return clothesTotalLists.stream().map(this::convertToResponseDto)
                 .collect(Collectors.toList());
